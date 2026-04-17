@@ -490,7 +490,6 @@ def run_demo(
         server_name=server_name,
         server_port=server_port,
         show_error=show_error,
-        share=True,
         i18n=I18N,
         theme=_APP_THEME,
         css=_CUSTOM_CSS,
