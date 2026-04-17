@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y \
     python3-pip \
     git \
     wget \
+    ffmpeg \
     && rm -rf /var/lib/apt/lists/*
 
 RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.11 1 && \
@@ -33,4 +34,4 @@ RUN pip install --no-cache-dir .
 
 EXPOSE 8808
 
-CMD ["python", "app.py", "--port", "8808", "--share"]
+CMD ["python", "app.py", "--port", "8808"]
