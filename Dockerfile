@@ -34,4 +34,4 @@ RUN pip install --no-cache-dir .
 
 EXPOSE 8808
 
-CMD ["python", "app.py", "--port", "8808"]
+CMD ["python", "app.py", "--port", "8808", "--model-id", "openbmb/VoxCPM2"]
