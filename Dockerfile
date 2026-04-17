@@ -1,0 +1,35 @@
+FROM nvidia/cuda:12.4.1-cudnn-runtime-ubuntu22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV PYTHONUNBUFFERED=1
+
+RUN apt-get update && apt-get install -y \
+    python3.11 \
+    python3.11-dev \
+    python3-pip \
+    git \
+    wget \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.11 1 && \
+    update-alternatives --install /usr/bin/python python /usr/bin/python3.11 1
+
+WORKDIR /app
+
+COPY pyproject.toml ./
+COPY README.md ./
+COPY src ./src
+COPY app.py ./
+COPY app_old.py ./
+COPY lora_ft_webui.py ./
+COPY conf ./conf
+COPY examples ./examples
+
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir torch torchaudio --index-url https://download.pytorch.org/whl/cu124
+
+RUN pip install --no-cache-dir -e .
+
+EXPOSE 8808
+
+CMD ["python", "app.py", "--port", "8808", "--share"]
